@@ -87,6 +87,6 @@ int main(void) {
             write_color(stdout, vec3_scale(pixel, pixel_samples_scale));
         }
     }
-    fprintf(stderr, "\r¡Listo!                 \n");
+    fprintf(stderr, "\r¡Listo!                  \n");
     return 0;
 }
