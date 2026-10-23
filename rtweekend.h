@@ -3,7 +3,6 @@
 
 #include <math.h>
 #include <stdlib.h>   // rand, RAND_MAX
-#include "vec3.h"
 
 #define PI 3.1415926535897932385
 
@@ -58,6 +57,21 @@ static inline vec3 random_on_hemisphere(vec3 normal) {
 static inline int vec3_near_zero(vec3 v) {
     double s = 1e-8;
     return (fabs(v.x) < s) && (fabs(v.y) < s) && (fabs(v.z) < s);
+}
+
+// Reflexion especular (si la tenias en material.h, puedes centralizarla aqui)
+static inline vec3 reflect(vec3 v, vec3 n) {
+    return vec3_sub(v, vec3_scale(n, 2 * vec3_dot(v, n)));
+}
+
+// Refraccion segun la ley de Snell.
+// uv: direccion unitaria entrante; n: normal; etai_over_etat = eta / eta'
+static inline vec3 refract(vec3 uv, vec3 n, double etai_over_etat) {
+    double cos_theta = fmin(vec3_dot(vec3_neg(uv), n), 1.0);
+    vec3 r_out_perp = vec3_scale(vec3_add(uv, vec3_scale(n, cos_theta)), etai_over_etat);
+    double k = 1.0 - vec3_length_squared(r_out_perp);
+    vec3 r_out_parallel = vec3_scale(n, -sqrt(fabs(k)));
+    return vec3_add(r_out_perp, r_out_parallel);
 }
 
 #endif
