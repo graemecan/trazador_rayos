@@ -62,7 +62,7 @@ int main(void) {
         { v3(-1,      0, -1),   0.5,  &mat_left },   // esfera de vidrio
         { v3(-1,      0, -1),   0.4,  &mat_bubble }, // burbuja dentro (mismo centro)
         { v3( 1,      0, -1),   0.5,  &mat_right },
-};
+    };
     hittable_list world = { spheres, 5 };
 
     // --- Imagen ---
